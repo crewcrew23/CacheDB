@@ -9,11 +9,13 @@
 #include "data_comand.h"
 #include "../storage/Storage.h"
 #include "../executor/BucketExecutor.h"
+#include "../executor/DataExecutor.h"
 
 class ComandParser {
 private:
     Logger logger_;
     BucketExecutor& bucket_executor_;
+    DataExecutor& data_executor_;
     Storage& storage_;
 
     std::vector<std::string> splitCommand(const std::string& command) const;
@@ -21,7 +23,8 @@ private:
     bool isDataCommand(const std::string& cmd) const;
 
 public:
-    ComandParser(Storage& storage, BucketExecutor& bucket_executor) : storage_(storage), bucket_executor_(bucket_executor) {}
+    ComandParser(Storage& storage, BucketExecutor& bucket_executor, DataExecutor& data_executor) 
+    : storage_(storage), bucket_executor_(bucket_executor), data_executor_(data_executor) {}
     void parse(const std::string& command) const;
 };
 #endif //COMANDPARSER_H

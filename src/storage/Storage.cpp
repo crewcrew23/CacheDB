@@ -60,9 +60,10 @@ std::optional<std::string> Storage::get(const long& id) const{
     auto& bucket = *(it->second);
     auto value =  bucket.find(id);
     if (value == bucket.end()) {
+        logger_.log("GET VALUE: ", "null");
         return std::nullopt;
     }
-
+    logger_.log("GET VALUE: ", value->second);
     return value->second;
 }
 

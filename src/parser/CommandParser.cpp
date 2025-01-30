@@ -60,6 +60,9 @@ void ComandParser::parse(const std::string& command) const{
             }
         }
         logger_.log("Executing data command: " + data_command::commandToString.at(cmd) + " Key: " + key + " Value: " + value);
+        std::string cmd_string = data_command::commandToString.at(cmd);
+        long key_long = std::stol(key);
+        data_executor_.execute(cmd_string, storage_, key_long, value);
         return;
     }
 
