@@ -2,7 +2,7 @@
 
 void DataExecutor::execute(const std::string& cmd, Storage& storage, const long& key, const std::string& value) {
     try {
-        if (cmd == "SEY") {
+        if (cmd == "SET") {
             bool status = storage.set(key, value);
             logger_.log("SET bucket value status: " + std::to_string(status));
         } else if (cmd == "GET") {

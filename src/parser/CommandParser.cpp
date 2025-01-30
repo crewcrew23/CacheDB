@@ -52,15 +52,25 @@ void ComandParser::parse(const std::string& command) const{
         }
         data_command::DATA_COMMAND cmd = data_command::stringToCommand.at(tokens[0]);
         std::string key, value;
-        for (size_t i = 1; i < tokens.size(); i += 2) {
+        for (size_t i = 1; i < tokens.size(); i++) {
             if (tokens[i] == "-k" || tokens[i] == "--key") {
-                if (i + 1 < tokens.size()) key = tokens[i + 1];
+                if (i + 1 < tokens.size()) {
+                    key = tokens[i + 1];
+                    i++;
+                }
             } else if (tokens[i] == "-v" || tokens[i] == "--value") {
-                if (i + 1 < tokens.size()) value = tokens[i + 1];
+                if (i + 1 < tokens.size()) {
+                    value = tokens[i + 1];
+                    i++;
+                }
             }
         }
         logger_.log("Executing data command: " + data_command::commandToString.at(cmd) + " Key: " + key + " Value: " + value);
         std::string cmd_string = data_command::commandToString.at(cmd);
+        if (key.empty()) {
+            logger_.log("Error: Key is empty");
+            return;
+        }
         long key_long = std::stol(key);
         data_executor_.execute(cmd_string, storage_, key_long, value);
         return;
